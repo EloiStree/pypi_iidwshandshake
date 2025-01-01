@@ -1,6 +1,8 @@
 
 # 2025_01_01_MegaMaskSignInHandshake_Python
 
+When tool will be ready: `import iidwshandshake`
+
 Python package to create Ethereum MetaMask-compatible WebSocket connections from handshake.
 
 ### Guest User
