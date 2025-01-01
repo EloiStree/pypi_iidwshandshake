@@ -1,15 +1,18 @@
 
 # 2025_01_01_MegaMaskSignInHandshake_Python
 
-**Python package to create Ethereum MetaMask-compatible WebSocket connections from handshake.**
+Python package to create Ethereum MetaMask-compatible WebSocket connections from handshake.
 
 ### Guest User
 
 I wanted to implement a guest system to make it easier to use, but it made the code unnecessarily complex.  
-If you want to allow guests, create one server specifically for guests and another for regular users. Then, use a script to add guests more easily to your Git claim repository.
+If you want to allow guests, create one server specifically for guests and another for regular users.
+Then, use a script to add guests more easily to your Git claim repository.
+The issue with guests is the duality of the problem: 
+- you need the ability to kick users who harm the server.
+- With guests, this becomes a more complicated situation to manage.
 
-The issue with guests is the duality of the problem: you need the ability to kick users who harm the server. With guests, this becomes a more complicated situation to manage.
-
+This tool should be in a KISS use.
 
 ### Handshake Process
 
