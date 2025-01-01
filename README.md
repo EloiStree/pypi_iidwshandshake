@@ -5,16 +5,7 @@ When tool will be ready: `import iidwshandshake`
 
 Python package to create Ethereum MetaMask-compatible WebSocket connections from handshake.
 
-### Guest User
 
-I wanted to implement a guest system to make it easier to use, but it made the code unnecessarily complex.  
-If you want to allow guests, create one server specifically for guests and another for regular users.
-Then, use a script to add guests more easily to your Git claim repository.
-The issue with guests is the duality of the problem: 
-- you need the ability to kick users who harm the server.
-- With guests, this becomes a more complicated situation to manage.
-
-This tool should be in a KISS use.
 
 ### Handshake Process
 
@@ -34,3 +25,17 @@ This tool should be in a KISS use.
 
 - Any message larger than 16 bytes will result in a server kick.  
 - Any text sent after verification will also result in a server kick.  
+- If you want hundred of users, you need to kick the one that don't read the manual.
+- You need to keep track of bytes use for a index user /minute /hour /day /month
+  - Look at  
+
+### Not Guest User
+
+I wanted to implement a guest system to make it easier to use, but it made the code unnecessarily complex.  
+If you want to allow guests, create one server specifically for guests and another for regular users.
+Then, use a script to add guests more easily to your Git claim repository.
+The issue with guests is the duality of the problem: 
+- you need the ability to kick users who harm the server.
+- With guests, this becomes a more complicated situation to manage.
+
+This tool should be in a KISS use.
