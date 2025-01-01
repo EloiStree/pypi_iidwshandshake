@@ -27,7 +27,7 @@ Python package to create Ethereum MetaMask-compatible WebSocket connections from
 - Any text sent after verification will also result in a server kick.  
 - If you want hundred of users, you need to kick the one that don't read the manual.
 - You need to keep track of bytes use for a index user /minute /hour /day /month
-  - Look at  
+  - See https://github.com/EloiStree/2025_01_01_IndexSpamKicker/blob/main/README.md
 
 ### Not Guest User
 
