@@ -15,11 +15,61 @@ import websockets
 
 
 
+
+
+
 ######## NTP 3 START ########
 ntp_server = "time.google.com"
 server_url= "ws://193.150.14.47:4615"
-private_key = "0xdf2541a2a722be6211bacfd1f8b15993445914ac8b75b419664c544c7e27323e"
+salt = "CHANGE_BY_RANDOM_PHRASE_YOUR_LIKE"
+# Will add file read
 tornado_tunnel = None
+display_private_key = False
+
+import hashlib
+
+def generate_private_key_from_file(file_path, salt):
+    try:
+        # Read the file in binary mode
+        with open(file_path, 'rb') as file:
+            file_data = file.read()
+        file_data += salt.encode()
+        
+        # Hash the file data using SHA-256
+        hash_object = hashlib.sha256(file_data)
+        private_key = hash_object.hexdigest()
+        
+        # Verify the private key range (optional but recommended)
+        private_key_int = int(private_key, 16)
+        if not (1 <= private_key_int < 2**256):
+            raise ValueError("Generated private key is out of range!")
+        
+        return private_key
+    except FileNotFoundError:
+        return "Error: File not found!"
+    except Exception as e:
+        return f"Error: {e}"
+
+def generate_private_key_from_computer_id(salt):
+    import uuid
+    computer_id = uuid.getnode()
+    print (f"Computer ID: {computer_id}+{salt}")
+    private_key = hashlib.sha256(str(computer_id).encode()).hexdigest()
+    return private_key
+
+
+
+file_path_absolute = "C:/PrivateKey.jpg"
+file_path_relative = "PrivateKey.jpg"
+file_path=""
+if os.path.exists(file_path_absolute):
+    private_key = generate_private_key_from_file(file_path_absolute, salt)
+elif os.path.exists(file_path_relative):
+    private_key = generate_private_key_from_file(file_path_relative, salt)
+else:
+   private_key = generate_private_key_from_computer_id( salt)
+    
+## private_key = generate_private_key_from_computer_id( salt)
 
 
 def get_ntp_time():
@@ -45,7 +95,11 @@ print(f"diff: {millisecond_diff}")
 ######## WEB 3 START ########
 public_address = ""
 
-print(f"Private Key: {private_key}")
+
+if display_private_key:
+    print(f"Private Key: {private_key}")
+else:
+    print(f"Private Key: {private_key[:4]}...")
 
 w3 = Web3()
 
@@ -85,12 +139,7 @@ class AbstractHandShake:
     
     def has_sent_signed_guid(self):
         return self.signed_guid_sent is not None
-        
     
-    
-    
-    
-
     
 import tornado.ioloop
 import tornado.websocket
@@ -108,7 +157,6 @@ class ReconnectingWebSocketClient:
         self.is_validated = False
         self.bytes_queue = asyncio.Queue()
         self.text_queue = asyncio.Queue()
-
 
     def get_public_address(self):
         return self.public_address if self.public_address else ""
@@ -281,7 +329,17 @@ def start_udp_server_byte(client : ReconnectingWebSocketClient, ip_mask="127.0.0
             while True:
                 data, addr = s.recvfrom(1024)
                 print(f"Received from {addr}: {data}")
-                client.send_bytes_message(data)
+                l= len(data)
+                if l==4:
+                    int_value = struct.unpack("<i", data)[0]
+                    bytes= struct.pack("<iQ", int_value, get_ntp_time_from_local())
+                    client.send_bytes_message(bytes)
+                elif l==8:
+                    index,value= struct.unpack("<ii", data)
+                    bytes= struct.pack("<iiQ", index, value, get_ntp_time_from_local())
+                    client.send_bytes_message(bytes)
+                else :
+                    client.send_bytes_message(data)
         except Exception as e:
             print(f"Error starting UDP server: {e}")
             sys.exit(1)
@@ -297,7 +355,7 @@ if __name__ == "__main__":
     client = ReconnectingWebSocketClient(server_url)
     udp_listener_server_udp_byte(client)
     udp_listener_server_udp_text(client)
-    thread_your_code_here_loop(client)
+    # thread_your_code_here_loop(client)
     
 
     def start_client():
