@@ -20,8 +20,9 @@ import websockets
 
 ######## NTP 3 START ########
 ntp_server = "time.google.com"
-server_url= "ws://193.150.14.47:4615"
 salt = "CHANGE_BY_RANDOM_PHRASE_YOUR_LIKE"
+server_url = "ws://193.150.14.47:4615"
+
 # Will add file read
 tornado_tunnel = None
 display_private_key = False
@@ -351,7 +352,6 @@ def udp_listener_server_udp_byte(client : ReconnectingWebSocketClient, ip_mask="
 
 
 if __name__ == "__main__":
-    server_url = "ws://193.150.14.47:4615"
     client = ReconnectingWebSocketClient(server_url)
     udp_listener_server_udp_byte(client)
     udp_listener_server_udp_text(client)
