@@ -1,10 +1,14 @@
+# PyPI: `import iidwshandshake`
 
-# 2025_01_01_MegaMaskSignInHandshake_Python
+__Under construction__
 
-When tool will be ready: `import iidwshandshake`
+This tool provide code to connect as client to a Integer server of APIntIO.
+Python for Raspberry PI server: [https://github.com/EloiStree/2025_01_01_HelloMetaMaskPushToIID](https://github.com/EloiStree/2025_01_01_HelloMetaMaskPushToIID)
 
-Python package to create Ethereum MetaMask-compatible WebSocket connections from handshake.
 
+This package provide an SHA256 and Ehtereum way to do it.  
+(If you look at a Unity3D RSA way, you can go there:  
+https://github.com/EloiStree/OpenUPM_WsClientIID.git  )
 
 
 ### Handshake Process
@@ -20,6 +24,12 @@ Python package to create Ethereum MetaMask-compatible WebSocket connections from
     - Close connection if there is an error
   - Send `Hello (INDEX_INTEGER): PUBLICADDRESS` if the handshake succeeds  
   - Set the user as verified   
+
+
+
+
+-------------------
+# Archived
 
 ### Additional Notes for IID Servers
 
